@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS recipes (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    prep_time INT NOT NULL,
+    difficulty INT DEFAULT '1',
+    is_vegetarian BOOLEAN,
+    is_valid BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+    # Application container
+    web:
+        build: "./docker/nginx"
+        privileged: true
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - "./var/log:/var/log"
+            - ".:/var/www/html"
+        depends_on:
+            - db
+        links:
+            - php
+            - db
+        container_name: web
+
+    php:
+        build: "./docker/php7"
+        volumes:
+            - "./var/log:/var/log"
+            - ".:/var/www/html"
+        links:
+            - "db"
+        container_name: php
+
+    db:
+        image: onjin/alpine-postgres:9.5
+        restart: unless-stopped
+        ports:
+            - "5432:5432"
+        environment:
+            LC_ALL: C.UTF-8
+            POSTGRES_USER: recipe
+            POSTGRES_PASSWORD: recipe
+            POSTGRES_DB: recipe
+        volumes:
+            - ./database/data:/var/lib/postgresql/data/
+            - ./database/schema/:/docker-entrypoint-initdb.d/
+        container_name: db

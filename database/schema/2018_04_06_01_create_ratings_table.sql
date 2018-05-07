@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS ratings (
+    id BIGSERIAL PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    score INT NOT NULL
+);
